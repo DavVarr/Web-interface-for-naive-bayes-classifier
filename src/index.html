@@ -1,13 +1,39 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
     <head>
         <title>Classifier</title>
-        <link rel="stylesheet" href="style.css">
+        
+        <link rel="stylesheet" href="css/uikit.min.css" />
+        <script src="js/uikit.min.js"></script>
+        <script src="js/uikit-icons.min.js"></script>
     </head>    
     <body>
-            
-        
+        <nav class="uk-navbar-container uk-text-large" uk-navbar style="background: linear-gradient(to left,#28a5f5,#1e87f0) ; color: white; ">
+            <div class="uk-navbar-left uk-padding-small" >
+                <a style="margin-right: 10px ;" href="https://github.com/Davide0000/web-programming-project " target="_blank" class="uk-icon-button" uk-icon="github"></a>
+            Naive bayes classifier
+            </div>
+        </nav>
+        <div class="uk-padding">
+        <div class="uk-column-1-2" > 
+            <div>
+                This site was made with the intent of teaching to a Naive-Bayes classifier how to collect and split out different pieces of text 
+                from various documents or posts. You can choose either to teach or classify from the batch of documents you picked by checking one of the 3 following options: 
+            </div>
+            <div>
+                <form >
+                    <input type="radio" id="simple">
+                        <label  for="simple">Simple learning</label>
+                    <input type="radio" id="advanced">
+                        <label  for="advanced">Guided learning</label>
+                    <input type="radio" id="auto">
+                        <label  for="auto">Automatic classifier</label>
+                </form>
+            </div>
+        </div>
+        </div>
     </body>
     <script src="script.js"></script>
+    
 </html>
