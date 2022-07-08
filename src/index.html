@@ -8,30 +8,124 @@
         <script src="js/uikit.min.js"></script>
         <script src="js/uikit-icons.min.js"></script>
     </head>    
-    <body>
+    <body style="background-color: white; color: black;">
         <nav class="uk-navbar-container uk-text-large" uk-navbar style="background: linear-gradient(to left,#28a5f5,#1e87f0) ; color: white; ">
             <div class="uk-navbar-left uk-padding-small" >
                 <a style="margin-right: 10px ;" href="https://github.com/Davide0000/web-programming-project " target="_blank" class="uk-icon-button" uk-icon="github"></a>
             Naive bayes classifier
             </div>
         </nav>
-        <div class="uk-padding">
-        <div class="uk-column-1-2" > 
+    <div class="uk-padding uk-margin-small">
+            <div class="uk-child-width-1-2@s uk-margin" uk-grid  > 
             <div>
                 This site was made with the intent of teaching to a Naive-Bayes classifier how to collect and split out different pieces of text 
                 from various documents or posts. You can choose either to teach or classify from the batch of documents you picked by checking one of the 3 following options: 
             </div>
             <div>
-                <form >
-                    <input type="radio" id="simple">
-                        <label  for="simple">Simple learning</label>
-                    <input type="radio" id="advanced">
-                        <label  for="advanced">Guided learning</label>
-                    <input type="radio" id="auto">
-                        <label  for="auto">Automatic classifier</label>
-                </form>
+                <div class="uk-form-controls">
+                    <label><input class="uk-radio" type="radio" name="radio1"> Simple learning</label><br>
+                    <label><input class="uk-radio" type="radio" name="radio1"> Guided learning</label><br>
+                    <label><input class="uk-radio" type="radio" name="radio1"> Automatic classifier</label>
+                </div>
+            </div>
+            </div>
+        <div class="uk-margin uk-width-1-2"uk-grid>
+            <div>
+                TOTAL BATCHES: 
+            </div>
+            <div>
+                COMPLETED BATCHES:
             </div>
         </div>
+        
+        <div class="uk-child-width-1-2@s" uk-grid>
+           
+        
+            <div class="uk-grid-small uk-child-width-1-2@s uk-grid-match " uk-grid>
+                <div class="uk-width-1-1">
+                    <progress class="uk-progress" value="" max=""></progress>
+                </div>
+                    <div>
+                        <div id="Firstunit" class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small" style="cursor:pointer">
+                            <h3 class="card-title">First batch unit <a href="" uk-icon="icon: twitter"></a></h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        </div>
+                    </div>
+                
+                    <div>
+                        <div  id="Secondunit" class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"style="cursor:pointer">
+                            <h3 class="card-title">Second batch unit <a href="" uk-icon="icon: twitter"></a></h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        </div>
+                    </div>
+                
+                    <div>
+                        <div id="Thirdunit" class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"style="cursor:pointer">
+                            <h3 class="card-title">Third batch unit <a href="" uk-icon="icon: twitter"></a></h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        </div>
+                    </div>
+                
+                    <div>
+                        <div id="Fourthunit" class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"style="cursor:pointer">
+                            <h3 class="card-title">Fourth batch unit <a href="" uk-icon="icon: twitter"></a></h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        </div>
+                    </div>
+            
+                    <div>
+                        <div  id="Fiftunit"  class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"style="cursor:pointer">
+                            <h3 class="card-title">Fifth batch unit <a href="" uk-icon="icon: twitter"></a></h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        </div>
+                    </div>
+            
+            </div>
+            <div >
+                <div uk-sticky="offset:200">
+                    
+                        <div class="uk-margin">
+                            <div uk-form-custom="target: > * > span:first-child">
+                                <select>
+                                    <option value="">Please select...</option>
+                                    <option value="1">Positive</option>
+                                    <option value="2">Neutral</option>
+                                    <option value="3">Negative</option>
+                                </select>
+                                <button class="uk-button uk-button-default" type="button" tabindex="-1">
+                                    <span></span>
+                                    <span uk-icon="icon: chevron-down"></span>
+                                </button>
+                            </div>
+                        </div>
+                    
+                    <div class="uk-margin-small">
+                        <button class="uk-button uk-button-default uk-button-large">Positive</button>
+                        <button class="uk-button uk-button-default uk-button-large">Neutral</button>
+                        <button class="uk-button uk-button-default uk-button-large">Negative</button>
+                    </div>
+                    <div id="Focusedtext" class="uk-card-small uk-card-primary uk-card-body">
+                        <h3 class="card-title">Selected area of text </h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    </div>
+                    <div class="uk-margin small">
+                        <button class="uk-button uk-button-default">Yes</button> 
+                        <button class="uk-button uk-button-default">No</button>
+                        <button class="uk-button uk-button-default">Submit</button>
+                        <button class="uk-button uk-button-default">classify</button>
+                    </div>
+                    <div id="Feedback" class="uk-card-small uk-card-primary uk-card-body">
+                        <h3 class="card-title">Feedback </h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    </div>
+                </div>
+
+            </div>
+    
+            </div>
+        
         </div>
     </body>
     <script src="script.js"></script>
