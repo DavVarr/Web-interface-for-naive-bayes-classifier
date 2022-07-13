@@ -71,3 +71,8 @@
   .uk-light .uk-switch-slider:not(.uk-switch-on-off) {
     background-color: rgba(255,255,255,0.22);
   }
+
+  .darkmode{
+    background-color: black;
+    color: white;
+  }

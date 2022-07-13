@@ -22,7 +22,7 @@
         <div class="uk-navbar-right ">
             <label class="uk-switch" for="default-1">
                 <input type="checkbox" id="default-1" checked>
-                <div class="uk-switch-slider"></div>
+                <div class="uk-switch-slider" onclick="darkmode()"></div>
               </label>
         </div>
     </nav>
@@ -31,7 +31,7 @@
         <div class="uk-child-width-1-2@s" uk-grid>
             
 
-            <div class="uk-grid-small uk-child-width-1-2@s uk-grid-match " uk-grid>
+            <div id="tweetcards" class="uk-grid-small uk-child-width-1-2@s uk-grid-match " uk-grid>
 
                 
                 <div class="uk-width-1-1">
@@ -43,9 +43,10 @@
                     </div>
                     <progress class="uk-progress" value="" max=""></progress>
                 </div>
+
                 <div>
-                    <div id="Firstunit"
-                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
+                    <div 
+                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small tweetcard"
                         style="cursor:pointer">
                         <h3 class="card-title">First batch unit <a href="" uk-icon="icon: twitter"></a></h3>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -58,8 +59,8 @@
                 </div>
 
                 <div>
-                    <div id="Secondunit"
-                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
+                    <div
+                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small tweetcard"
                         style="cursor:pointer">
                         <h3 class="card-title">Second batch unit <a href="" uk-icon="icon: twitter"></a></h3>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -68,8 +69,8 @@
                 </div>
 
                 <div>
-                    <div id="Thirdunit"
-                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
+                    <div 
+                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small tweetcard"
                         style="cursor:pointer">
                         <h3 class="card-title">Third batch unit <a href="" uk-icon="icon: twitter"></a></h3>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -78,8 +79,8 @@
                 </div>
 
                 <div>
-                    <div id="Fourthunit"
-                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
+                    <div
+                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small tweetcard"
                         style="cursor:pointer">
                         <h3 class="card-title">Fourth batch unit <a href="" uk-icon="icon: twitter"></a></h3>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -88,8 +89,8 @@
                 </div>
 
                 <div>
-                    <div id="Fiftunit"
-                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
+                    <div 
+                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small tweetcard"
                         style="cursor:pointer">
                         <h3 class="card-title">Fifth batch unit <a href="" uk-icon="icon: twitter"></a></h3>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -98,8 +99,8 @@
                 </div>
 
                 <div>
-                    <div id="Sixthunit"
-                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
+                    <div 
+                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small tweetcard"
                         style="cursor:pointer">
                         <h3 class="card-title">Fifth batch unit <a href="" uk-icon="icon: twitter"></a></h3>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -123,7 +124,7 @@
                         </div>
                         
                     <div class="uk-margin ">
-                        <div uk-form-custom="target: > * > span:first-child">
+                        <div id="categories" uk-form-custom="target: > * > span:first-child">
                             <select>
                                 <option style="font-size: 20px" value="1">Positive</option>
                                 <option style="font-size: 20px" value="2">Neutral</option>
@@ -141,10 +142,8 @@
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua.
                     </div>
-                    <div class="uk-margin small">
-                        <button class="uk-button uk-button-default">Yes</button>
-                        <button class="uk-button uk-button-default">No</button>
-                        <button class="uk-button uk-button-default">Submit</button>
+                    <div id="classifierbuttons" class="uk-margin small">
+                        <button class="uk-button uk-button-default">Learn</button>
                         <button class="uk-button uk-button-default">classify</button>
                     </div>
                     <div id="Feedback" class="uk-card-small uk-card-primary uk-card-body">
