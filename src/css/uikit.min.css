@@ -13,7 +13,7 @@
   }
   /* Slider */
   .uk-switch-slider {
-    background-color: rgba(0,0,0,0.22);
+    background-color: white;
     position: absolute;
     top: 0;
     left: 0;
@@ -28,7 +28,7 @@
   /* Switch pointer */
   .uk-switch-slider:before {
     content: '';
-    background-color: #fff;
+    background-color: #39f;
     position: absolute;
     width: 30px;
     height: 30px;
@@ -40,7 +40,7 @@
   }
   /* Slider active color */
   input:checked + .uk-switch-slider {
-    background-color: #d3d3d3!important;
+    background-color: black!important;
   }
   /* Pointer active animation */
   input:checked + .uk-switch-slider:before {
