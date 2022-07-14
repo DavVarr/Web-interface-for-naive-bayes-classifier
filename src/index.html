@@ -4,13 +4,13 @@
 
 <head>
     <title>Classifier</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/uikit.min.css" />
     <script src="js/uikit.min.js"></script>
     <script src="js/uikit-icons.min.js"></script>
 </head>
 
-<body >
+<body>
     <nav class="uk-padding-small uk-navbar-container uk-text-large" uk-navbar
         style="background: linear-gradient(to left,#28a5f5,#1e87f0) ; color: white; ">
         <div class="uk-navbar-left ">
@@ -20,33 +20,34 @@
         </div>
 
         <div class="uk-navbar-right ">
+
             <label class="uk-switch" for="default-1">
-                <input type="checkbox" id="default-1" checked>
-                <div class="uk-switch-slider" onclick="darkmode()"></div>
-              </label>
+                <input type="checkbox" id="default-1" onclick="darkmode()">
+                <div class="uk-switch-slider"></div>
+            </label>
+            <div style="margin-left: 5px;">Dark mode</div>
         </div>
     </nav>
     <div class="uk-padding uk-margin-small uk-dark">
 
         <div class="uk-child-width-1-2@s" uk-grid>
-            
+
 
             <div id="tweetcards" class="uk-grid-small uk-child-width-1-2@s uk-grid-match " uk-grid>
 
-                
+
                 <div class="uk-width-1-1">
                     <div>
-                        This site was made with the intent of teaching to a Naive-Bayes classifier how to collect and split out
-                        different pieces of text
-                        from various documents or posts. You can choose either to teach or classify from the batch of documents
-                        you picked by checking one of the 3 following options:
+                        This site was made to provide an interface to train and use a Naive-Bayes classifier on
+                        various documents or posts. In this instance, some finance related tweets are provided.
+                        You can choose either to teach or classify a tweet by clicking on it after selecting one of the
+                        3 provided modes
                     </div>
                     <progress class="uk-progress" value="" max=""></progress>
                 </div>
 
                 <div>
-                    <div 
-                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small tweetcard"
+                    <div class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
                         style="cursor:pointer">
                         <h3 class="card-title">First batch unit <a href="" uk-icon="icon: twitter"></a></h3>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -59,8 +60,7 @@
                 </div>
 
                 <div>
-                    <div
-                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small tweetcard"
+                    <div class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
                         style="cursor:pointer">
                         <h3 class="card-title">Second batch unit <a href="" uk-icon="icon: twitter"></a></h3>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -69,8 +69,7 @@
                 </div>
 
                 <div>
-                    <div 
-                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small tweetcard"
+                    <div class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
                         style="cursor:pointer">
                         <h3 class="card-title">Third batch unit <a href="" uk-icon="icon: twitter"></a></h3>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -79,8 +78,7 @@
                 </div>
 
                 <div>
-                    <div
-                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small tweetcard"
+                    <div class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
                         style="cursor:pointer">
                         <h3 class="card-title">Fourth batch unit <a href="" uk-icon="icon: twitter"></a></h3>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -89,8 +87,7 @@
                 </div>
 
                 <div>
-                    <div 
-                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small tweetcard"
+                    <div class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
                         style="cursor:pointer">
                         <h3 class="card-title">Fifth batch unit <a href="" uk-icon="icon: twitter"></a></h3>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -99,10 +96,9 @@
                 </div>
 
                 <div>
-                    <div 
-                        class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small tweetcard"
+                    <div class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
                         style="cursor:pointer">
-                        <h3 class="card-title">Fifth batch unit <a href="" uk-icon="icon: twitter"></a></h3>
+                        <h3 class="card-title">Sixth batch unit <a href="" uk-icon="icon: twitter"></a></h3>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua.
                     </div>
@@ -112,52 +108,53 @@
             <div>
                 <div>
 
-                <div uk-sticky="offset: 25">
-                
+                    <div uk-sticky="offset: 25">
+
                         <div class="uk-form-controls">
                             <label><input class="uk-radio" type="radio" name="radio1"> Simple learning</label>
                             <label><input class="uk-radio" type="radio" name="radio1"> Guided learning</label>
                             <label><input class="uk-radio" type="radio" name="radio1"> Automatic classifier</label>
                         </div>
-                        <div id="instructions"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        <div id="instructions"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                            tempor incididunt ut
                             labore et dolore magna aliqua.
                         </div>
-                        
-                    <div class="uk-margin ">
-                        <div id="categories" uk-form-custom="target: > * > span:first-child">
-                            <select>
-                                <option style="font-size: 20px" value="1">Positive</option>
-                                <option style="font-size: 20px" value="2">Neutral</option>
-                                <option style="font-size: 20px" value="3">Negative</option>
-                            </select>
-                            <button class="uk-button uk-button-default " type="button" tabindex="-1">
-                                <span></span>
-                                <span uk-icon="icon: chevron-down"></span>
-                            </button>
+
+                        <div class="uk-margin ">
+                            <div id="categories" uk-form-custom="target: > * > span:first-child">
+                                <select>
+                                    <option style="font-size: 20px" value="1">Positive</option>
+                                    <option style="font-size: 20px" value="2">Neutral</option>
+                                    <option style="font-size: 20px" value="3">Negative</option>
+                                </select>
+                                <button class="uk-button uk-button-default " type="button" tabindex="-1">
+                                    <span></span>
+                                    <span uk-icon="icon: chevron-down"></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="Focusedtext" class="uk-card-small uk-card-primary uk-card-body">
+                            <h3 class="card-title">Selected area of text </h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.
+                        </div>
+                        <div id="classifierbuttons" class="uk-margin small">
+                            <button class="uk-button uk-button-default">Learn</button>
+                            <button class="uk-button uk-button-default">classify</button>
+                        </div>
+                        <div id="Feedback" class="uk-card-small uk-card-primary uk-card-body">
+                            <h3 class="card-title">Feedback </h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.
                         </div>
                     </div>
 
-                    <div id="Focusedtext" class="uk-card-small uk-card-primary uk-card-body">
-                        <h3 class="card-title">Selected area of text </h3>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.
-                    </div>
-                    <div id="classifierbuttons" class="uk-margin small">
-                        <button class="uk-button uk-button-default">Learn</button>
-                        <button class="uk-button uk-button-default">classify</button>
-                    </div>
-                    <div id="Feedback" class="uk-card-small uk-card-primary uk-card-body">
-                        <h3 class="card-title">Feedback </h3>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.
-                    </div>
                 </div>
 
             </div>
 
         </div>
-
-    </div>
 </body>
 <script src="script.js"></script>
 
