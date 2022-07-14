@@ -1,18 +1,36 @@
 const {TwitterApi} = require('twitter-api-v2')
 const fs = require("fs")
-//this gets runned only once to get sample data, didn't want to add .env for so little. if you want to run this just place your bearer token in a key.txt file
-//keep in mind you'll get different results, as the search method fetches the tweets from the last 7 days.
-const key = fs.readFileSync("key.txt")
-const appOnlyClient = new TwitterApi(String(key))
+require('dotenv').config()
+//in your .env put BEARER_TOKEN = "your token"
+const appOnlyClient = new TwitterApi(process.env.BEARER_TOKEN)
 
-async function getTweets(){
-    const jsTweets = await appOnlyClient.v2.search('from:markets OR from:MarketCurrents',{'max_results':100})
-    for(let i = 0; i<4;i++) await jsTweets.fetchNext();
+function randomDate(start, end) {
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
+
+
+
+async function getTweets(max_results){
+    if(max_results > 100 || max_results < 10 ) throw new Error("max results can only be between 10-100")
+    let jsTweets
+    do {
+        let oneWeekAgo = new Date()
+        oneWeekAgo.setDate(oneWeekAgo.getDate()-7)
+        end_time = randomDate(oneWeekAgo, new Date())
+        start_time = randomDate(oneWeekAgo,end_time)
+        console.log(start_time)
+        console.log(end_time)    
+        jsTweets = await appOnlyClient.v2.search('from:markets OR from:MarketCurrents -is:retweet -is:reply',
+        {'max_results':max_results,'end_time':end_time.toISOString(),'start_time':start_time.toISOString()})
+        console.log("executed")
+    } while (jsTweets.tweets.length < max_results); 
+    
     for (const tweet of jsTweets) {
         tweet.text = tweet.text.replace(/(?:https):\/\/[\n\S]+/g, '')
         tweet.url = "https://twitter.com/twitter/status/"+tweet.id
+        tweet.classified = "unknown"
     }
-    console.log(jsTweets.tweets.length)
-    fs.writeFileSync('data.json',JSON.stringify(jsTweets.tweets))
+    return jsTweets.tweets
 }
-getTweets()
+
+module.exports = {getTweets}
