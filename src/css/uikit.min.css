@@ -40,7 +40,7 @@
   }
   /* Slider active color */
   input:checked + .uk-switch-slider {
-    background-color: black!important;
+    background-color: #0D0D0D !important;
   }
   /* Pointer active animation */
   input:checked + .uk-switch-slider:before {
@@ -73,6 +73,6 @@
   }
 
   .darkmode{
-    background-color: black;
+    background-color: #0D0D0D;
     color: white;
   }
