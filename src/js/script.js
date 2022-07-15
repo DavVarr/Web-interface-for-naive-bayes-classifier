@@ -1,3 +1,11 @@
+if (localStorage.getItem('tweets') === null){
+    fetch('/tweets')
+    .then(function(response){
+        return response.text()
+    }).then(function(tweets){
+        localStorage.setItem('tweets',tweets)
+    })
+}
 //useful html nodes
 const grid = document.getElementById('tweet-cards');
 const cards = grid.querySelectorAll('.uk-card-body');
