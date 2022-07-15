@@ -117,17 +117,17 @@
                 </div>
 
             </div>
-            <div>
+            <div class="uk-animation-slide-right-small">
                 <div>
 
                     <div uk-sticky="offset: 25">
 
                         <div class="uk-form-controls">
-                            <label><input class="uk-radio" type="radio" name="radio1"> Simple learning</label>
-                            <label><input class="uk-radio" type="radio" name="radio1"> Guided learning</label>
-                            <label><input class="uk-radio" type="radio" name="radio1"> Automatic classifier</label>
+                            <label><input id="simple-mode" class="uk-radio" type="radio" name="radio1" > Simple learning</label>
+                            <label><input id="guided-mode" class="uk-radio" type="radio" name="radio1" > Guided learning</label>
+                            <label><input id="automatic-mode" class="uk-radio" type="radio" name="radio1" > Automatic classifier</label>
                         </div>
-                        <div id="instructions"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                        <div class="uk-margin-small" id="mode-instructions"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                             tempor incididunt ut
                             labore et dolore magna aliqua.
                         </div>
@@ -151,8 +151,9 @@
                             <p></p>
                         </div>
                         <div id="classifier-buttons" class="uk-margin small">
-                            <button class="uk-button uk-button-default">Learn</button>
-                            <button class="uk-button uk-button-default">classify</button>
+                            <button id="learn" class="uk-button uk-button-default">Learn</button>
+                            <button id="classify" class="uk-button uk-button-default">classify</button>
+                            <button class="uk-button uk-button-default">Get new cards</button>
                         </div>
                         <div id="feedback" class="uk-card-small uk-card-primary uk-card-body">
                             <h3 class="card-title">Feedback </h3>
