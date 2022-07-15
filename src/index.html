@@ -1,13 +1,196 @@
 <!DOCTYPE html>
 
-<html>
-    <head>
-        <title>Classifier</title>
-        <link rel="stylesheet" href="style.css">
-    </head>    
-    <body>
-            
-        
-    </body>
-    <script src="script.js"></script>
+<html lang="en">
+
+<head>
+    <title>Classifier</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/uikit.min.css" />
+    <script src="js/uikit.min.js"></script>
+    <script src="js/uikit-icons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.js"></script>
+</head>
+
+<body>
+    <nav class="uk-padding-small uk-navbar-container uk-text-large" uk-navbar
+        style="background: linear-gradient(to left,#28a5f5,#1e87f0) ; color: white; ">
+        <div class="uk-navbar-left ">
+            <a style="margin-right: 10px ;" href="https://github.com/Davide0000/web-programming-project "
+                target="_blank" class="uk-icon-button" uk-icon="github"></a>
+            Naive bayes classifier
+        </div>
+
+        <div class="uk-navbar-right ">
+
+            <label class="uk-switch" for="darkmode-checkbox">
+                <input type="checkbox" id="darkmode-checkbox">
+                <div class="uk-switch-slider"></div>
+            </label>
+            <div style="margin-left: 5px;">Dark mode</div>
+        </div>
+    </nav>
+    <div class="uk-padding uk-margin-small uk-dark">
+
+        <div class="uk-child-width-1-2@s" uk-grid>
+
+
+            <div id="tweet-cards" class="uk-grid-small uk-child-width-1-2@s uk-grid-match " uk-grid>
+
+
+                <div class="uk-width-1-1">
+                    <div>
+                        This site was made to provide an interface to train and use a Naive-Bayes classifier on
+                        various documents or posts. In this instance, some finance related tweets are provided.
+                        You can choose either to teach or classify a tweet by clicking on it after selecting one of the
+                        3 provided modes
+                    </div>
+
+                    <progress class="uk-progress" value="" max=""></progress>
+
+                    <ul class="uk-pagination uk-flex-center">
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                    </ul>
+
+                </div>
+
+                <div>
+                    <div class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
+                        style="cursor:pointer">
+                        <h3 class="card-title">First batch unit <a href="" uk-icon="icon: twitter"></a></h3>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
+                        style="cursor:pointer">
+                        <h3 class="card-title">Second batch unit <a href="" uk-icon="icon: twitter"></a></h3>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
+                        style="cursor:pointer">
+                        <h3 class="card-title">Third batch unit <a href="" uk-icon="icon: twitter"></a></h3>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
+                        style="cursor:pointer">
+                        <h3 class="card-title">Fourth batch unit <a href="" uk-icon="icon: twitter"></a></h3>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
+                        style="cursor:pointer">
+                        <h3 class="card-title">Fifth batch unit <a href="" uk-icon="icon: twitter"></a></h3>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="uk-card-large uk-card-default uk-card-hover uk-card-body uk-animation-slide-left-small"
+                        style="cursor:pointer">
+                        <h3 class="card-title">Sixth batch unit <a href="" uk-icon="icon: twitter"></a></h3>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <div>
+                <div>
+
+                    <div uk-sticky="offset: 25" class="uk-animation-slide-right-small">
+
+                        <div class="uk-form-controls">
+                            <label><input id="simple-mode" class="uk-radio" type="radio" name="radio1"> Simple
+                                learning</label>
+                            <label><input id="guided-mode" class="uk-radio" type="radio" name="radio1"> Guided
+                                learning</label>
+                            <label><input id="automatic-mode" class="uk-radio" type="radio" name="radio1"> Automatic
+                                classification</label>
+                        </div>
+                        <div class="uk-margin-small" id="mode-instructions"> Lorem ipsum dolor sit amet, consectetur
+                            adipiscing elit, sed do eiusmod
+                            tempor incididunt ut
+                            labore et dolore magna aliqua.
+                        </div>
+
+                        <div class="uk-margin ">
+                            <div id="categories" uk-form-custom="target: > * > span:first-child">
+                                <select>
+                                    <option style="font-size: 20px" value="1">Positive</option>
+                                    <option style="font-size: 20px" value="2">Neutral</option>
+                                    <option style="font-size: 20px" value="3">Negative</option>
+                                </select>
+                                <button class="uk-button uk-button-default " type="button" tabindex="-1">
+                                    <span></span>
+                                    <span uk-icon="icon: chevron-down"></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="work-card" class="uk-card-small uk-card-primary uk-card-body">
+                            <h3 class="card-title">Selected document </h3>
+                            <p></p>
+                        </div>
+                        <div id="classifier-buttons" class="uk-margin small">
+                            <button id="learn" class="uk-button uk-button-default">Learn</button>
+                            <button id="classify" class="uk-button uk-button-default">classify</button>
+                            <button class="uk-button uk-button-default">Get new cards</button>
+                        </div>
+                        <div id="feedback" class="uk-card-small uk-card-primary uk-card-body">
+                            <h3 class="card-title">Feedback </h3>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.
+                        </div>
+                        <div class="uk-margin" uk-grid>
+                            <div class="uk-width-1-3">
+                                <canvas id="pieChart"></canvas>
+                            </div>
+                            <div class="uk-width-2-3">
+                                <canvas id="barChart"></canvas>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+</body>
+<script src="script.js"></script>
+
 </html>
