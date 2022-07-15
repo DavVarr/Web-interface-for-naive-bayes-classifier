@@ -17,12 +17,9 @@ async function getTweets(max_results){
         let oneWeekAgo = new Date()
         oneWeekAgo.setDate(oneWeekAgo.getDate()-7)
         end_time = randomDate(oneWeekAgo, new Date())
-        start_time = randomDate(oneWeekAgo,end_time)
-        console.log(start_time)
-        console.log(end_time)    
+        start_time = randomDate(oneWeekAgo,end_time)   
         jsTweets = await appOnlyClient.v2.search('from:markets OR from:MarketCurrents -is:retweet -is:reply',
         {'max_results':max_results,'end_time':end_time.toISOString(),'start_time':start_time.toISOString()})
-        console.log("executed")
     } while (jsTweets.tweets.length < max_results); 
     
     for (const tweet of jsTweets) {
