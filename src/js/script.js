@@ -1,16 +1,38 @@
-if (localStorage.getItem('tweets') === null){
-    fetch('/tweets')
-    .then(function(response){
-        return response.text()
-    }).then(function(tweets){
-        localStorage.setItem('tweets',tweets)
-    })
-}
+
 //useful html nodes
 const grid = document.getElementById('tweet-cards');
 const cards = grid.querySelectorAll('.uk-card-body');
 const divButtons = document.getElementById('classifier-buttons');
 const buttons = divButtons.querySelectorAll('.uk-button');
+//getting tweets on first load
+loadTweetsStartUp()
+async function loadTweetsStartUp(){
+    if(localStorage.getItem('tweets')=== null) await getTweets();
+    fillCards(0)
+}
+
+async function getTweets(){
+    await fetch('/tweets')
+    .then(function(response){
+        return response.text()
+    }).then(function(tweets){
+        localStorage.setItem('tweets',tweets)
+    });
+}
+function fillCards(page){
+    let tweets = JSON.parse(localStorage.getItem('tweets'));
+    cards.forEach((card,i)=>{
+        let p = card.getElementsByTagName('p')[0];
+        let a = card.getElementsByTagName('a')[0];
+        p.innerText = tweets[i+(6*page)].text;
+        a.setAttribute('href',tweets[i+(6*page)].url);
+        a.addEventListener('click',function(event){
+            event.stopPropagation();
+        })
+    
+    })
+}
+
 //disable classifier buttons on load,when nothing is selected
 buttons.forEach((button) => button.setAttribute('disabled', true))
 //dark mode
