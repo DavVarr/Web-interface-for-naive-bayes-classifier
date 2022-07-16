@@ -197,3 +197,25 @@ const myChart = new Chart(ctx, {
         }
     }
 });
+
+//selection of tweets batch
+
+let batches = document.getElementById('batchPage');
+batchPages = batches.getElementsByTagName('li');
+
+for(const page of batchPages){
+    page.addEventListener('click',() => {
+        selectedCard = grid.querySelector('.uk-card-primary');
+        if (selectedCard) {
+  
+           selectedCard.classList.remove('uk-card-primary');
+           if (localStorage.getItem('darkMode' === 'true')) selectedCard.classList.add('uk-card-secondary');
+        }
+        workP = workCard.getElementsByTagName('p')[0];
+        workP.innerText = '';
+
+        fillCards(parseInt(page.innerText) -1 );
+        
+    })
+}
+
