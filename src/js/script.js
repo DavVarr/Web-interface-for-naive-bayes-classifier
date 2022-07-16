@@ -209,7 +209,7 @@ for(const page of batchPages){
         if (selectedCard) {
   
            selectedCard.classList.remove('uk-card-primary');
-           if (localStorage.getItem('darkMode' === 'true')) selectedCard.classList.add('uk-card-secondary');
+           if (localStorage.getItem('darkMode') === 'true') selectedCard.classList.add('uk-card-secondary');
         }
         workP = workCard.getElementsByTagName('p')[0];
         workP.innerText = '';
