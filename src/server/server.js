@@ -10,7 +10,7 @@ if(fs.existsSync('classifier.json')){
 }else{
     classifier = bayes()
 }
- 
+
 let modified = false
 const MINUTES = 4
 let bufferedWrite = MINUTES*60*1000
@@ -26,7 +26,9 @@ function saveBeforeExit(options,exitCode){
 //buffering the write to file
 setInterval(() => {
     if(modified){
-        fs.writeFile('classifier.json',classifier.toJson(), (err)=> console.log(err))
+        fs.writeFile('classifier.json',classifier.toJson(), (err)=> {
+            if(err) console.log(err)
+        })
         modified = false
     }
 },bufferedWrite)
@@ -107,9 +109,11 @@ app.post('/model/learn', async (req,res)=>{
     "getProbabilities:"
 }
 */
-app.post('/model/classify', async (req,res)=>{    
-    let category = await classifier.categorize(req.body.text,req.body.getProbabilities)
-    res.send(JSON.stringify(category),200)
+app.post('/model/classify', async (req,res)=>{
+    let category
+    if(req.body.getProbabilities) category = await classifier.categorize(req.body.text,req.body.getProbabilities)
+    else category = category = await classifier.categorize(req.body.text)
+    res.send(JSON.stringify(category))
     res.end() 
 })
 app.listen(3000)
