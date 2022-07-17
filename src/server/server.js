@@ -68,12 +68,15 @@ app.get('/model/statistics', (req, res) => {
 
     // Tell the client to retry every 10 seconds if connectivity is lost
     res.write('retry: 10000\n\n')
+    // Send data on initial connection
+    let classifierData = {"docCount":classifier.get("docCount"),"totalDocuments":classifier.get("totalDocuments"),"vocabularySize":classifier.get("vocabularySize"),"wordCount":classifier.get("wordCount")}
+    res.write("data:"+JSON.stringify(classifierData)+"\n\n")
 
     let interval = setInterval(() => {
         // Emit an SSE that contains the classifier data
         if(modified) {
         let classifierData = {"docCount":classifier.get("docCount"),"totalDocuments":classifier.get("totalDocuments"),"vocabularySize":classifier.get("vocabularySize"),"wordCount":classifier.get("wordCount")}
-        res.write(JSON.stringify(classifierData))
+        res.write("data:"+JSON.stringify(classifierData)+"\n\n")
         }  
     },30000)
 
