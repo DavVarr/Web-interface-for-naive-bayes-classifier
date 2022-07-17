@@ -101,7 +101,7 @@ app.post('/model/learn', async (req,res)=>{
     await classifier.learn(req.body.text,req.body.category)
     modified = true
     let classifierData = {"docCount":classifier.get("docCount"),"totalDocuments":classifier.get("totalDocuments"),"vocabularySize":classifier.get("vocabularySize"),"wordCount":classifier.get("wordCount")}
-    res.send(JSON.stringify(classifierData),200)
+    res.send(JSON.stringify(classifierData))
     res.end() 
 })
 /*req = {
