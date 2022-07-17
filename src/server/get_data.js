@@ -25,7 +25,7 @@ async function getTweets(max_results){
     for (const tweet of jsTweets) {
         tweet.text = tweet.text.replace(/(?:https):\/\/[\n\S]+/g, '')
         tweet.url = "https://twitter.com/twitter/status/"+tweet.id
-        tweet.classified = "unknown"
+        tweet.category = "unknown"
     }
     return jsTweets.tweets
 }
