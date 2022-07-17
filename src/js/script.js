@@ -10,6 +10,8 @@ const divCategories = document.getElementById('categories');
 const selectCategory = divCategories.getElementsByTagName('select')[0];
 const selectedCategoryButton = divCategories.querySelector(".uk-button");
 const categories = divCategories.getElementsByTagName("option");
+const classifyButton = document.getElementById('classify');
+const learnButton = document.getElementById('learn');
 //getting tweets on first load
 loadTweetsStartUp();
 async function loadTweetsStartUp(){
@@ -37,7 +39,13 @@ function fillCards(page){
 }
 
 //disable classifier buttons on load,when nothing is selected
-buttons.forEach((button) => button.setAttribute('disabled', true))
+function disableButton(button){
+   button.setAttribute('disabled',true)
+}
+function enableButton(button){
+   button.removeAttribute('disabled')
+}
+buttons.forEach(disableButton)
 //dark mode
 if (localStorage.getItem('darkMode') === null) localStorage.setItem('darkMode', 'false');
 loadMode();
@@ -82,7 +90,7 @@ document.getElementById('darkmode-checkbox').addEventListener('click', () => {
 function deselectCard(){
    let selectedCard = grid.querySelector('.uk-card-primary');
    if (selectedCard) {
-
+      buttons.forEach(disableButton)
       selectedCard.classList.remove('uk-card-primary');
       if (localStorage.getItem('darkMode') === 'true') selectedCard.classList.add('uk-card-secondary');
       workCard.getElementsByTagName('p')[0].innerText = '';
@@ -98,14 +106,16 @@ cards.forEach((card) => {
     })    
    let p = card.getElementsByTagName('p')[0];
    card.addEventListener('click', () => {
+      deselectCard();
       //activate button when selecting a card
-      buttons.forEach((button) => button.removeAttribute('disabled'))
-      deselectCard()
+      enableButton(learnButton);
+      enableButton(classifyButton);
+      removeBadge(workCard);
       if (card.classList.contains('uk-card-secondary')) card.classList.remove('uk-card-secondary');
       card.classList.add('uk-card-primary');
       let workP = workCard.getElementsByTagName('p')[0];
       workP.innerText = p.innerText;
-      if(document.getElementById('guided-mode').checked) printProbabilities()
+      if(document.getElementById('guided-mode').checked) printProbabilities();
    })
 
 })
@@ -146,7 +156,7 @@ async function printProbabilities(){
          }
       }
    }catch(error){
-      alert("the classifier didn't learn anything yet!")
+      alert("the classifier didn't learn anything yet!");
    }
 }
 
@@ -155,49 +165,54 @@ function deleteCategoryProb(){
    for (const category of categories){
       switch (category.value){
          case '1':
-            category.innerText = 'Positive'
+            category.innerText = 'Positive';
             break;
          case '2':
-            category.innerText = 'Neutral'
+            category.innerText = 'Neutral';
             break;
          case '3':
-            category.innerText = 'Negative'
+            category.innerText = 'Negative';
             break;
       }
    }
 }
-
-document.getElementById('simple-mode').addEventListener('click', () => {
-   deleteCategoryProb()
-   document.getElementById('learn').style.display = 'inline';
+let previousRadio
+let simpleRadio = document.getElementById('simple-mode');
+let guidedRadio = document.getElementById('guided-mode')
+let automaticRadio = document.getElementById('automatic-mode');
+simpleRadio.addEventListener('click', () => {
+   deleteCategoryProb();
+   removeBadge(workCard);
+   if(previousRadio === automaticRadio)deselectCard();
+   learnButton.style.display = 'inline';
    document.getElementById('mode-instructions').innerHTML = "Choose one of the six cards on the left, then decide wether it has a positive neutral or negative meaning and submit it to the classifier so that it will learn it.";
-   let disabledButton = document.getElementById('classify');
-   disabledButton.style.display = 'none';
+   classifyButton.style.display = 'none';
+   previousRadio = simpleRadio;
 })
 
-document.getElementById('guided-mode').addEventListener('click', async () => {
-   document.getElementById('learn').style.display = 'inline';
+guidedRadio.addEventListener('click', async () => {
+   if(previousRadio === automaticRadio)deselectCard()
+   removeBadge(workCard);
+   learnButton.style.display = 'inline';
    document.getElementById('mode-instructions').innerHTML = `The classifier will suggest the class of the selected card, showing the degree of reliability, closer to 0 is better
     (it's a probability mapped to logarithm); then you can decide to keep or change the association before submitting it for learning.`;
-   let disabledButton = document.getElementById('classify');
-   disabledButton.style.display = 'none';
+   classifyButton.style.display = 'none';
    let selectedCard = grid.querySelector('.uk-card-primary');
    if (selectedCard) {
-      await printProbabilities()
+      await printProbabilities();
    }
+   previousRadio = guidedRadio;
 })
 
-document.getElementById('automatic-mode').addEventListener('click', () => {
-   deleteCategoryProb()
-   deselectCard()
-   document.getElementById('classify').style.display = 'inline';
+automaticRadio.addEventListener('click', () => {
+   deleteCategoryProb();
+   classifyButton.style.display = 'inline';
    document.getElementById('mode-instructions').innerHTML = "The classifier will automatically classify the selected card.";
-   let disabledButton = document.getElementById('learn');
-   disabledButton.style.display = 'none';
-
+   learnButton.style.display = 'none';
+   previousRadio = automaticRadio;
 })
 //default radio button    
-document.getElementById('simple-mode').click()
+simpleRadio.click();
 //selection of tweets batch
 
 let batches = document.getElementById('batchPage');
@@ -205,10 +220,25 @@ let batchPages = batches.getElementsByTagName('li');
 
 for(const page of batchPages){
     page.addEventListener('click',() => {
-        deselectCard()
+        deselectCard();
+        deleteCategoryProb();
+        removeBadge(workCard);
         fillCards(parseInt(page.innerText) -1 );
-        document.getElementById('page-indicator').innerText = 'Page '+ page.innerText
-        
+        document.getElementById('page-indicator').innerText = 'Page '+ page.innerText;
     })
 }
-
+//classify button event listener
+function addBadge(card,text){
+   let badge = document.createElement('div');
+   badge.classList.add('uk-card-badge');
+   badge.innerText = text;
+   card.appendChild(badge);
+}
+function removeBadge(card){
+   let badge = card.querySelector('.uk-card-badge');
+   if (badge) card.removeChild(badge);
+}
+classifyButton.addEventListener('click', async ()=>{
+   let category = await classify(workCard.getElementsByTagName('p')[0].innerText);
+   addBadge(workCard,category);
+})
