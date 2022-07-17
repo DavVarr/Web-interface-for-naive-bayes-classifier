@@ -44,7 +44,8 @@
                         This site was made to provide an interface to train and use a Naive-Bayes classifier on
                         various documents or posts. In this instance, some finance related tweets are provided.
                         You can choose either to teach or classify a tweet by clicking on it after selecting one of the
-                        3 provided modes. the progress bar will fill as the provided tweets are classified. You can switch
+                        3 provided modes. the progress bar will fill as the provided tweets are classified. You can
+                        switch
                         between pages by clicking on the numbers in the pagination bar below.
                     </div>
 
@@ -56,7 +57,7 @@
                         <li><a>3</a></li>
                         <li><a>4</a></li>
                     </ul>
-                    
+
                 </div>
 
                 <div>
@@ -133,60 +134,61 @@
 
             </div>
             <div>
-                <div>
 
-                    <div data-uk-sticky="offset: 25" class="uk-animation-slide-right-small">
 
-                        <div class="uk-form-controls">
-                            <label><input id="simple-mode" class="uk-radio" type="radio" name="radio1"> Simple
-                                learning</label>
-                            <label><input id="guided-mode" class="uk-radio" type="radio" name="radio1"> Guided
-                                learning</label>
-                            <label><input id="automatic-mode" class="uk-radio" type="radio" name="radio1"> Automatic
-                                classification</label>
-                        </div>
-                        <div class="uk-margin-small" id="mode-instructions">
-                        </div>
+                <div data-uk-sticky="offset: 25" class="uk-animation-slide-right-small">
 
-                        <div class="uk-margin ">
-                            <div id="categories" data-uk-form-custom="target: > * > span:first-child">
-                                <select>
-                                    <option style="font-size: 20px" value="1">Positive</option>
-                                    <option style="font-size: 20px" value="2">Neutral</option>
-                                    <option style="font-size: 20px" value="3">Negative</option>
-                                </select>
-                                <button class="uk-button uk-button-default " type="button" tabindex="-1">
-                                    <span></span>
-                                    <span data-uk-icon="icon: chevron-down"></span>
-                                </button>
-                            </div>
-                        </div>
+                    <div class="uk-form-controls">
+                        <label><input id="simple-mode" class="uk-radio" type="radio" name="radio1"> Simple
+                            learning</label>
+                        <label><input id="guided-mode" class="uk-radio" type="radio" name="radio1"> Guided
+                            learning</label>
+                        <label><input id="automatic-mode" class="uk-radio" type="radio" name="radio1"> Automatic
+                            classification</label>
+                    </div>
+                    <div class="uk-margin-small" id="mode-instructions">
+                    </div>
 
-                        <div id="work-card" class="uk-card-small uk-card-primary uk-card-body">
-                            <h3 class="card-title">Selected document </h3>
-                            <p></p>
-                        </div>
-                        <div id="classifier-buttons" class="uk-margin small">
-                            <button id="learn" class="uk-button uk-button-default">Learn</button>
-                            <button id="classify" class="uk-button uk-button-default">classify</button>
-                            <button class="uk-button uk-button-default">Get new cards</button>
-                        </div>
-                        <div id="feedback" class="uk-card-small uk-card-primary uk-card-body">
-                            <h3 class="card-title">Feedback </h3>
-
-                        </div>
-                        <div class="uk-margin" data-uk-grid>
-                            <div class="uk-width-1-2">
-                                <canvas id="pieChart"></canvas>
-                            </div>
-                            <div class="uk-width-1-2">
-                                <canvas id="barChart" style="height:25vw;"></canvas>
-                            </div>
-
+                    <div class="uk-margin ">
+                        <div id="categories" data-uk-form-custom="target: > * > span:first-child">
+                            <select>
+                                <option style="font-size: 20px" value="1">Positive</option>
+                                <option style="font-size: 20px" value="2">Neutral</option>
+                                <option style="font-size: 20px" value="3">Negative</option>
+                            </select>
+                            <button class="uk-button uk-button-default " type="button" tabindex="-1">
+                                <span></span>
+                                <span data-uk-icon="icon: chevron-down"></span>
+                            </button>
                         </div>
                     </div>
 
+                    <div id="work-card" class="uk-card uk-card-small uk-card-primary uk-card-body">
+                        <h3 class="card-title">Selected document </h3>
+                        <p></p>
+                    </div>
+
+                    <div id="classifier-buttons" class="uk-margin small">
+                        <button id="learn" class="uk-button uk-button-default">Learn</button>
+                        <button id="classify" class="uk-button uk-button-default">classify</button>
+                        <button class="uk-button uk-button-default">Get new cards</button>
+                    </div>
+                    <div id="feedback" class="uk-card-small uk-card-primary uk-card-body">
+                        <h3 class="card-title">Feedback </h3>
+
+                    </div>
+                    <div class="uk-margin" data-uk-grid>
+                        <div class="uk-width-1-2">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                        <div class="uk-width-1-2">
+                            <canvas id="barChart" style="height:25vw;"></canvas>
+                        </div>
+
+                    </div>
                 </div>
+
+
 
             </div>
 
