@@ -128,9 +128,6 @@ function fillCards(page){
         let a = card.getElementsByTagName('a')[0];
         p.innerText = tweets[i+(6*page)].text;
         a.setAttribute('href',tweets[i+(6*page)].url);
-        a.addEventListener('click',function(event){
-            event.stopPropagation();
-        })
     
     })
 }
@@ -199,6 +196,10 @@ document.getElementById('darkmode-checkbox').addEventListener('click', () => {
 
 let workCard = document.getElementById('work-card');
 cards.forEach((card) => {
+    let a = card.getElementsByTagName('a')[0];
+    a.addEventListener('click',function(event){
+        event.stopPropagation();
+    })    
    let p = card.getElementsByTagName('p')[0];
    card.addEventListener('click', () => {
       //activate button when selecting a card
