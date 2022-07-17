@@ -80,12 +80,11 @@ const docCountChart = new Chart(ctx, {
       },
 });
 
-function addCharts(){
+
 
 
 //get data for charts via sse
 function updateCharts(classifierData){
-    
     docCountChart.data.datasets[0].data[0] = classifierData.docCount.positive; 
     docCountChart.data.datasets[0].data[1] = classifierData.docCount.neutral;
     docCountChart.data.datasets[0].data[2] = classifierData.docCount.negative;
@@ -97,6 +96,7 @@ function updateCharts(classifierData){
     docCountChart.update();
     wordCountChart.update();
 }
+function connectSSE(){
 const source = new EventSource('/model/statistics');
 source.addEventListener('message', message => {
     let classifierData = JSON.parse(message.data);
@@ -117,4 +117,4 @@ function toggleDarkMode(){
        }
 }
 
-export {addCharts,toggleDarkMode};
+export {connectSSE,toggleDarkMode,updateCharts};

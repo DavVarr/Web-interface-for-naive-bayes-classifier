@@ -1,5 +1,5 @@
-import { addCharts, toggleDarkMode } from './chartsLogic.js';
-addCharts();
+import { connectSSE, toggleDarkMode,updateCharts} from './chartsLogic.js';
+connectSSE();
 //useful html nodes
 const grid = document.getElementById('tweet-cards');
 const cards = grid.querySelectorAll('.uk-card-body');
@@ -30,10 +30,12 @@ async function getTweets(){
 function fillCards(page){
     let tweets = JSON.parse(localStorage.getItem('tweets'));
     cards.forEach((card,i)=>{
-        let p = card.getElementsByTagName('p')[0];
-        let a = card.getElementsByTagName('a')[0];
-        p.innerText = tweets[i+(6*page)].text;
-        a.setAttribute('href',tweets[i+(6*page)].url);
+      removeBadge(card);
+      let p = card.getElementsByTagName('p')[0];
+      let a = card.getElementsByTagName('a')[0];
+      p.innerText = tweets[i+(6*page)].text;
+      a.setAttribute('href',tweets[i+(6*page)].url);
+      if(tweets[i+(6*page)].category !== 'unknown') addBadge(card,tweets[i+(6*page)].category.toUpperCase()); 
     
     })
 }
@@ -119,7 +121,21 @@ cards.forEach((card) => {
    })
 
 })
-//function to send post and classify
+//function to send post to learn
+async function learn(text,category){
+   let data = {'text': text, 'category':category};
+   let classifierData;
+      await fetch('/model/learn',{
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+      }).then(async response => {classifierData = await response.json()});
+      return classifierData;
+
+}
+//function to send post to classify
 async function classify(text,getProbabilities = false){
    let data = {'text': text, 'getProbabilities':getProbabilities};
    let classification;
@@ -217,12 +233,13 @@ simpleRadio.click();
 
 let batches = document.getElementById('batchPage');
 let batchPages = batches.getElementsByTagName('li');
-
+let currentPage = 0;
 for(const page of batchPages){
     page.addEventListener('click',() => {
         deselectCard();
         deleteCategoryProb();
         removeBadge(workCard);
+        currentPage = parseInt(page.innerText) -1;
         fillCards(parseInt(page.innerText) -1 );
         document.getElementById('page-indicator').innerText = 'Page '+ page.innerText;
     })
@@ -241,4 +258,22 @@ function removeBadge(card){
 classifyButton.addEventListener('click', async ()=>{
    let category = await classify(workCard.getElementsByTagName('p')[0].innerText);
    addBadge(workCard,category);
+})
+//learn button event listener
+learnButton.addEventListener('click',async ()=>{
+   let text = workCard.getElementsByTagName('p')[0].innerText;
+   let category = selectedCategoryButton.innerText.toLowerCase().trim();
+   let classifierData = await learn(text,category);
+   let tweets = JSON.parse(localStorage.getItem('tweets'));
+   cards.forEach((card,index)=>{
+      if(card.classList.contains('uk-card-primary')){
+         tweets[index+(6*currentPage)].category = category;
+         localStorage.setItem('tweets',JSON.stringify(tweets))
+         addBadge(card,category.toUpperCase());
+      }
+   })
+   
+   
+   
+   updateCharts(classifierData);
 })
