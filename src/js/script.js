@@ -91,7 +91,7 @@ cards.forEach((card) => {
    card.addEventListener('click', () => {
       //activate button when selecting a card
       buttons.forEach((button) => button.removeAttribute('disabled'))
-      selectedCard = grid.querySelector('.uk-card-primary');
+      let selectedCard = grid.querySelector('.uk-card-primary');
       if (selectedCard) {
 
          selectedCard.classList.remove('uk-card-primary');
@@ -99,7 +99,7 @@ cards.forEach((card) => {
       }
       if (card.classList.contains('uk-card-secondary')) card.classList.remove('uk-card-secondary');
       card.classList.add('uk-card-primary');
-      workP = workCard.getElementsByTagName('p')[0];
+      let workP = workCard.getElementsByTagName('p')[0];
       workP.innerText = p.innerText;
    })
 
@@ -135,14 +135,13 @@ let batchPages = batches.getElementsByTagName('li');
 
 for(const page of batchPages){
     page.addEventListener('click',() => {
-        selectedCard = grid.querySelector('.uk-card-primary');
+        let selectedCard = grid.querySelector('.uk-card-primary');
         if (selectedCard) {
   
            selectedCard.classList.remove('uk-card-primary');
            if (localStorage.getItem('darkMode') === 'true') selectedCard.classList.add('uk-card-secondary');
         }
-        workP = workCard.getElementsByTagName('p')[0];
-        workP.innerText = '';
+        workCard.getElementsByTagName('p')[0].innerText = '';
 
         fillCards(parseInt(page.innerText) -1 );
         
