@@ -144,6 +144,7 @@ for(const page of batchPages){
         workCard.getElementsByTagName('p')[0].innerText = '';
 
         fillCards(parseInt(page.innerText) -1 );
+        document.getElementById('page-indicator').innerText = 'Page '+ page.innerText
         
     })
 }
