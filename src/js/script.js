@@ -1,4 +1,106 @@
 
+//charts
+const ctx1 = document.getElementById('barChart').getContext('2d');
+const wordCountChart = new Chart(ctx1, {
+    type: 'bar',
+    data: {
+        labels: ['Positive','Neutral','Negative'],
+        datasets: [{
+            label: 'vocabulary size:',
+            data: [],
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(0, 167, 255, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+            ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(0, 167, 255, 1)',
+                'rgba(255, 99, 132, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        
+        scales: {
+            y: {
+                ticks:{
+                    stepSize:1
+                },
+                beginAtZero: true
+            },
+        },
+        plugins:{
+              subtitle:{
+                display: true,
+                text: '# of words mapped to each category',
+              },
+            legend:{
+                labels:{boxWidth:0}
+            }
+        }
+    }
+});
+
+const ctx = document.getElementById('pieChart').getContext('2d');
+const docCountChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Positive','Neutral','Negative'],
+        datasets: [{
+            data: [],
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(0, 167, 255, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+            ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(0, 167, 255, 1)',
+                'rgba(255, 99, 132, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: '# of tweets mapped to each category',
+          },
+          subtitle:{
+            display: true,
+            text:'total:'
+          }
+        }
+      },
+});
+//get data for charts via sse
+function updateCharts(classifierData){
+    
+    docCountChart.data.datasets[0].data[0] = classifierData.docCount.positive; 
+    docCountChart.data.datasets[0].data[1] = classifierData.docCount.neutral;
+    docCountChart.data.datasets[0].data[2] = classifierData.docCount.negative;
+    wordCountChart.data.datasets[0].data[0] = classifierData.wordCount.positive;
+    wordCountChart.data.datasets[0].data[1] = classifierData.wordCount.neutral;
+    wordCountChart.data.datasets[0].data[2] = classifierData.wordCount.negative;
+    docCountChart.options.plugins.subtitle.text = 'total:'+ classifierData.totalDocuments;
+    wordCountChart.data.datasets[0].label = 'vocabulary size:'+classifierData.vocabularySize;
+    docCountChart.update()
+    wordCountChart.update()
+}
+const source = new EventSource('/model/statistics');
+source.addEventListener('message', message => {
+    classifierData = JSON.parse(message.data);
+    updateCharts(classifierData);
+});
+
+
 //useful html nodes
 const grid = document.getElementById('tweet-cards');
 const cards = grid.querySelectorAll('.uk-card-body');
@@ -71,6 +173,19 @@ function toggleStyle() {
       button.classList.toggle("uk-button-secondary");
 
    })
+   if(localStorage.getItem('darkMode') === 'true'){
+    wordCountChart.options.scales.y.grid.color = 'rgba(255,255,255,0.2)';
+    wordCountChart.options.scales.y.grid.borderColor = 'rgba(255,255,255,0.2)';
+    wordCountChart.options.scales.x.grid.color = 'rgba(255,255,255,0.2)';
+    wordCountChart.options.scales.x.grid.borderColor = 'rgba(255,255,255,0.2)';
+    wordCountChart.update()
+   }else{
+    delete wordCountChart.options.scales.y['grid'];
+    delete wordCountChart.options.scales.x['grid'];
+    wordCountChart.update()
+   }
+   
+   
 }
 document.getElementById('darkmode-checkbox').addEventListener('click', () => {
    if (localStorage.getItem('darkMode') === 'false') {
@@ -123,85 +238,12 @@ document.getElementById('automatic-mode').addEventListener('click', () => {
    disabledButton = document.getElementById('learn');
    disabledButton.style.display = 'none';
 
-})
-//charts
-const ctx1 = document.getElementById('barChart').getContext('2d');
-const myChart1 = new Chart(ctx1, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-      indexAxis: 'y',
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
-
-const ctx = document.getElementById('pieChart').getContext('2d');
-const myChart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
+})    
 
 //selection of tweets batch
 
 let batches = document.getElementById('batchPage');
-batchPages = batches.getElementsByTagName('li');
+let batchPages = batches.getElementsByTagName('li');
 
 for(const page of batchPages){
     page.addEventListener('click',() => {
