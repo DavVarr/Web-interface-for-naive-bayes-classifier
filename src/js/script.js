@@ -15,8 +15,8 @@ const learnButton = document.getElementById('learn');
 const newTweetsButton = document.getElementById('newTweets');
 const progressBar = document.getElementById('progress-bar');
 //getting tweets on first load
-loadTweetsStartUp();
-async function loadTweetsStartUp(){
+loadTweets();
+async function loadTweets(){
    let tweets = localStorage.getItem('tweets');
     if(tweets === null)tweets = await getTweets();
     tweets = JSON.parse(tweets);
@@ -50,13 +50,18 @@ function fillCards(page){
 }
 
 //disable classifier buttons on load,when nothing is selected
-function disableButton(button){
+
+function disableButton(button,tooltip){
+   button.setAttribute('data-uk-tooltip',tooltip)
    button.setAttribute('disabled',true)
 }
 function enableButton(button){
    button.removeAttribute('disabled')
+   button.removeAttribute('data-uk-tooltip')
 }
-buttons.forEach(disableButton)
+disableButton(learnButton,'select a card for learning');
+disableButton(classifyButton,'select a card for classification');
+if(progressBar.value < progressBar.max)disableButton(newTweetsButton,'you can only request new tweets when you finished the current ones');
 //dark mode
 if (localStorage.getItem('darkMode') === null) localStorage.setItem('darkMode', 'false');
 loadMode();
@@ -101,7 +106,9 @@ document.getElementById('darkmode-checkbox').addEventListener('click', () => {
 function deselectCard(){
    let selectedCard = grid.querySelector('.uk-card-primary');
    if (selectedCard) {
-      buttons.forEach(disableButton)
+      disableButton(learnButton,'select a card for learning');
+      disableButton(classifyButton,'select a card for classification');
+      disableButton(newTweetsButton,'you can only request new tweets when you finished the current ones');
       selectedCard.classList.remove('uk-card-primary');
       if (localStorage.getItem('darkMode') === 'true') selectedCard.classList.add('uk-card-secondary');
       workCard.getElementsByTagName('p')[0].innerText = '';
@@ -119,7 +126,7 @@ cards.forEach((card) => {
    card.addEventListener('click', () => {
       deselectCard();
       //activate button when selecting a card
-      if(card.getElementsByClassName('uk-card-badge')[0])disableButton(learnButton);
+      if(card.getElementsByClassName('uk-card-badge')[0])disableButton(learnButton,'this tweet is already learned');
       else enableButton(learnButton);
       enableButton(classifyButton);
       removeBadge(workCard);
@@ -289,7 +296,14 @@ learnButton.addEventListener('click',async ()=>{
       }
    })
    
-   disableButton(learnButton);
+   disableButton(learnButton,'this tweet is already learned');
    progressBar.value += 1;
    updateCharts(classifierData);
+   if(progressBar.value == progressBar.max)enableButton(newTweetsButton)
+})
+
+newTweetsButton.addEventListener('click',async ()=>{
+   await getTweets();
+   loadTweets();
+   disableButton(newTweetsButton,'you can only request new tweets when you finished the current ones');
 })
