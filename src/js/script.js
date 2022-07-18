@@ -12,10 +12,19 @@ const selectedCategoryButton = divCategories.querySelector(".uk-button");
 const categories = divCategories.getElementsByTagName("option");
 const classifyButton = document.getElementById('classify');
 const learnButton = document.getElementById('learn');
+const newTweetsButton = document.getElementById('newTweets');
+const progressBar = document.getElementById('progress-bar');
 //getting tweets on first load
 loadTweetsStartUp();
 async function loadTweetsStartUp(){
-    if(localStorage.getItem('tweets')=== null) await getTweets();
+   let tweets = localStorage.getItem('tweets');
+    if(tweets === null) await getTweets();
+    tweets = JSON.parse(tweets);
+    let completedTweets = tweets.reduce((previous,current)=>{
+      if(current.category !== 'unknown') return previous + 1;
+      else return previous;
+    },0)
+    progressBar.value = completedTweets;
     fillCards(0);
 }
 
@@ -110,7 +119,8 @@ cards.forEach((card) => {
    card.addEventListener('click', () => {
       deselectCard();
       //activate button when selecting a card
-      enableButton(learnButton);
+      if(card.getElementsByClassName('uk-card-badge')[0])disableButton(learnButton);
+      else enableButton(learnButton);
       enableButton(classifyButton);
       removeBadge(workCard);
       if (card.classList.contains('uk-card-secondary')) card.classList.remove('uk-card-secondary');
@@ -192,22 +202,18 @@ function deleteCategoryProb(){
       }
    }
 }
-let previousRadio
 let simpleRadio = document.getElementById('simple-mode');
 let guidedRadio = document.getElementById('guided-mode')
 let automaticRadio = document.getElementById('automatic-mode');
 simpleRadio.addEventListener('click', () => {
    deleteCategoryProb();
    removeBadge(workCard);
-   if(previousRadio === automaticRadio)deselectCard();
    learnButton.style.display = 'inline';
    document.getElementById('mode-instructions').innerHTML = "Choose one of the six cards on the left, then decide wether it has a positive neutral or negative meaning and submit it to the classifier so that it will learn it.";
    classifyButton.style.display = 'none';
-   previousRadio = simpleRadio;
 })
 
 guidedRadio.addEventListener('click', async () => {
-   if(previousRadio === automaticRadio)deselectCard()
    removeBadge(workCard);
    learnButton.style.display = 'inline';
    document.getElementById('mode-instructions').innerHTML = `The classifier will suggest the class of the selected card, showing the degree of reliability, closer to 0 is better
@@ -217,7 +223,6 @@ guidedRadio.addEventListener('click', async () => {
    if (selectedCard) {
       await printProbabilities();
    }
-   previousRadio = guidedRadio;
 })
 
 automaticRadio.addEventListener('click', () => {
@@ -225,7 +230,6 @@ automaticRadio.addEventListener('click', () => {
    classifyButton.style.display = 'inline';
    document.getElementById('mode-instructions').innerHTML = "The classifier will automatically classify the selected card.";
    learnButton.style.display = 'none';
-   previousRadio = automaticRadio;
 })
 //default radio button    
 simpleRadio.click();
@@ -273,7 +277,7 @@ learnButton.addEventListener('click',async ()=>{
       }
    })
    
-   
-   
+   disableButton(learnButton);
+   progressBar.value += 1;
    updateCharts(classifierData);
 })
