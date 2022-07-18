@@ -18,7 +18,7 @@ const progressBar = document.getElementById('progress-bar');
 loadTweetsStartUp();
 async function loadTweetsStartUp(){
    let tweets = localStorage.getItem('tweets');
-    if(tweets === null) await getTweets();
+    if(tweets === null)tweets = await getTweets();
     tweets = JSON.parse(tweets);
     let completedTweets = tweets.reduce((previous,current)=>{
       if(current.category !== 'unknown') return previous + 1;
@@ -29,12 +29,12 @@ async function loadTweetsStartUp(){
 }
 
 async function getTweets(){
-    await fetch('/tweets')
+   let tweets = await fetch('/tweets')
     .then(function(response){
         return response.text()
-    }).then(function(tweets){
-        localStorage.setItem('tweets',tweets)
     });
+    localStorage.setItem('tweets',tweets)
+    return tweets;
 }
 function fillCards(page){
     let tweets = JSON.parse(localStorage.getItem('tweets'));
@@ -266,7 +266,19 @@ classifyButton.addEventListener('click', async ()=>{
 //learn button event listener
 learnButton.addEventListener('click',async ()=>{
    let text = workCard.getElementsByTagName('p')[0].innerText;
-   let category = selectedCategoryButton.innerText.toLowerCase().trim();
+   let category;
+   switch(selectCategory.value){
+      case '1':
+         category = 'positive'
+         break;
+      case '2':
+         category = 'neutral'
+         break
+      case '3':
+         category = 'negative'
+         break;
+   }
+   console.log(category)
    let classifierData = await learn(text,category);
    let tweets = JSON.parse(localStorage.getItem('tweets'));
    cards.forEach((card,index)=>{
