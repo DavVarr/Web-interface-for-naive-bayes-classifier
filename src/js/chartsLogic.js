@@ -5,7 +5,7 @@ const wordCountChart = new Chart(ctx1, {
     data: {
         labels: ['Positive','Neutral','Negative'],
         datasets: [{
-            label: 'vocabulary size:',
+            label: '# of words mapped to each category',
             data: [],
             backgroundColor: [
                 'rgba(75, 192, 192, 0.2)',
@@ -33,7 +33,7 @@ const wordCountChart = new Chart(ctx1, {
         plugins:{
               subtitle:{
                 display: true,
-                text: '# of words mapped to each category',
+                text: 'vocabulary size:',
               },
             legend:{
                 labels:{boxWidth:0}
@@ -92,7 +92,7 @@ function updateCharts(classifierData){
     wordCountChart.data.datasets[0].data[1] = classifierData.wordCount.neutral;
     wordCountChart.data.datasets[0].data[2] = classifierData.wordCount.negative;
     docCountChart.options.plugins.subtitle.text = 'total:'+ classifierData.totalDocuments;
-    wordCountChart.data.datasets[0].label = 'vocabulary size:'+classifierData.vocabularySize;
+    wordCountChart.options.plugins.subtitle.text = 'vocabulary size:'+classifierData.vocabularySize;
     docCountChart.update();
     wordCountChart.update();
 }
