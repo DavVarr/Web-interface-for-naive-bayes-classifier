@@ -49,7 +49,7 @@
                         between pages by clicking on the numbers in the pagination bar below.
                     </div>
 
-                    <progress class="uk-progress" value="0" max="24"></progress>
+                    <progress id="progress-bar" class="uk-progress" value="0" max="24"></progress>
                     <span id="page-indicator" style="text-align: center;">Page 1</span>
                     <ul id="batchPage" class="uk-pagination uk-flex-center">
                         <li><a>1</a></li>
@@ -171,12 +171,8 @@
                     <div id="classifier-buttons" class="uk-margin small">
                         <button id="learn" class="uk-button uk-button-default">Learn</button>
                         <button id="classify" class="uk-button uk-button-default">classify</button>
-                        <button class="uk-button uk-button-default">Get new cards</button>
-                    </div>
-                    <div id="feedback" class="uk-card-small uk-card-primary uk-card-body">
-                        <h3 class="card-title">Feedback </h3>
-
-                    </div>
+                        <button id ="newTweets" class="uk-button uk-button-default">Get new cards</button>
+                    
                     <div class="uk-margin" data-uk-grid>
                         <div class="uk-width-1-2">
                             <canvas id="pieChart"></canvas>
