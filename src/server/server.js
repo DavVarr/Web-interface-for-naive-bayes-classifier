@@ -71,13 +71,13 @@ app.get('/model/statistics', (req, res) => {
     // Tell the client to retry every 10 seconds if connectivity is lost
     res.write('retry: 10000\n\n')
     // Send data on initial connection
-    let classifierData = {"docCount":classifier.get("docCount"),"totalDocuments":classifier.get("totalDocuments"),"vocabularySize":classifier.get("vocabularySize"),"wordCount":classifier.get("wordCount")}
+    let classifierData = {"docCount":classifier.docCount,"totalDocuments":classifier.totalDocuments,"vocabularySize":classifier.vocabularySize,"wordCount":classifier.wordCount}
     res.write("data:"+JSON.stringify(classifierData)+"\n\n")
 
     let interval = setInterval(() => {
         // Emit an SSE that contains the classifier data
         if(modified) {
-        let classifierData = {"docCount":classifier.get("docCount"),"totalDocuments":classifier.get("totalDocuments"),"vocabularySize":classifier.get("vocabularySize"),"wordCount":classifier.get("wordCount")}
+        let classifierData = {"docCount":classifier.docCount,"totalDocuments":classifier.totalDocuments,"vocabularySize":classifier.vocabularySize,"wordCount":classifier.wordCount}
         res.write("data:"+JSON.stringify(classifierData)+"\n\n")
         }  
     },30000)
@@ -100,7 +100,7 @@ req = {
 app.post('/model/learn', async (req,res)=>{    
     await classifier.learn(req.body.text,req.body.category)
     modified = true
-    let classifierData = {"docCount":classifier.get("docCount"),"totalDocuments":classifier.get("totalDocuments"),"vocabularySize":classifier.get("vocabularySize"),"wordCount":classifier.get("wordCount")}
+    let classifierData = {"docCount":classifier.docCount,"totalDocuments":classifier.totalDocuments,"vocabularySize":classifier.vocabularySize,"wordCount":classifier.wordCount}
     res.send(JSON.stringify(classifierData))
     res.end() 
 })
