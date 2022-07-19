@@ -1,5 +1,7 @@
 import { connectSSE, updateCharts } from './chartsLogic.js';
+//running dark mode code
 import './darkMode.js';
+import {getTweets,learn,classify} from './serverRequests.js'
 connectSSE();
 //useful html nodes
 import { grid, cards, workCard, selectCategory, categories, classifyButton, learnButton, newTweetsButton, progressBar } from './htmlNodes.js'
@@ -7,7 +9,10 @@ import { grid, cards, workCard, selectCategory, categories, classifyButton, lear
 loadTweets();
 async function loadTweets() {
    let tweets = localStorage.getItem('tweets');
-   if (tweets === null) tweets = await getTweets();
+   if (tweets === null) {
+      tweets = await getTweets()
+      localStorage.setItem('tweets', tweets);
+   };
    tweets = JSON.parse(tweets);
    let completedTweets = tweets.reduce((previous, current) => {
       if (current.category !== 'unknown') return previous + 1;
@@ -17,14 +22,7 @@ async function loadTweets() {
    fillCards(0);
 }
 
-async function getTweets() {
-   let tweets = await fetch('/tweets')
-      .then(function (response) {
-         return response.text()
-      });
-   localStorage.setItem('tweets', tweets)
-   return tweets;
-}
+
 function fillCards(page) {
    let tweets = JSON.parse(localStorage.getItem('tweets'));
    cards.forEach((card, i) => {
@@ -38,7 +36,7 @@ function fillCards(page) {
    })
 }
 
-//disable classifier buttons on load,when nothing is selected
+
 
 function disableButton(button, tooltip) {
    button.setAttribute('data-uk-tooltip', tooltip)
@@ -48,6 +46,7 @@ function enableButton(button) {
    button.removeAttribute('disabled')
    button.removeAttribute('data-uk-tooltip')
 }
+//disable classifier buttons on load,when nothing is selected
 disableButton(learnButton, 'select a card for learning');
 disableButton(classifyButton, 'select a card for classification');
 if (progressBar.value < progressBar.max) disableButton(newTweetsButton, 'you can only request new tweets when you finished the current ones');
@@ -87,34 +86,7 @@ cards.forEach((card) => {
    })
 
 })
-//function to send post to learn
-async function learn(text, category) {
-   let data = { 'text': text, 'category': category };
-   let classifierData;
-   await fetch('/model/learn', {
-      method: 'POST',
-      headers: {
-         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-   }).then(async response => { classifierData = await response.json() });
-   return classifierData;
 
-}
-//function to send post to classify
-async function classify(text, getProbabilities = false) {
-   let data = { 'text': text, 'getProbabilities': getProbabilities };
-   let classification;
-   await fetch('/model/classify', {
-      method: 'POST',
-      headers: {
-         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-   }).then(async response => { classification = await response.json() });
-   return classification;
-
-}
 
 //function to print guided mode log probabilities
 async function printProbabilities() {
@@ -142,7 +114,7 @@ async function printProbabilities() {
    }
 }
 
-//mode of use
+//function to remove guided mode log probabilites
 function deleteCategoryProb() {
    for (const category of categories) {
       switch (category.value) {
@@ -158,6 +130,7 @@ function deleteCategoryProb() {
       }
    }
 }
+//mode of use
 let simpleRadio = document.getElementById('simple-mode');
 let guidedRadio = document.getElementById('guided-mode')
 let automaticRadio = document.getElementById('automatic-mode');
@@ -204,7 +177,7 @@ for (const page of batchPages) {
       document.getElementById('page-indicator').innerText = 'Page ' + page.innerText;
    })
 }
-//classify button event listener
+//functions to add and remove badge to card
 function addBadge(card, text) {
    let badge = document.createElement('div');
    badge.classList.add('uk-card-badge');
@@ -215,6 +188,7 @@ function removeBadge(card) {
    let badge = card.querySelector('.uk-card-badge');
    if (badge) card.removeChild(badge);
 }
+//classify button event listener
 classifyButton.addEventListener('click', async () => {
    let category = await classify(workCard.getElementsByTagName('p')[0].innerText);
    addBadge(workCard, category);
