@@ -56,7 +56,6 @@ function deselectCard() {
    if (selectedCard) {
       disableButton(learnButton, 'select a card for learning');
       disableButton(classifyButton, 'select a card for classification');
-      disableButton(newTweetsButton, 'you can only request new tweets when you finished the current ones');
       selectedCard.classList.remove('uk-card-primary');
       if (localStorage.getItem('darkMode') === 'true') selectedCard.classList.add('uk-card-secondary');
       workCard.getElementsByTagName('p')[0].innerText = '';
@@ -225,7 +224,8 @@ learnButton.addEventListener('click', async () => {
 })
 
 newTweetsButton.addEventListener('click', async () => {
-   await getTweets();
+   let tweets = await getTweets();
+   localStorage.setItem('tweets',tweets)
    loadTweets();
    disableButton(newTweetsButton, 'you can only request new tweets when you finished the current ones');
 })
