@@ -1,5 +1,6 @@
 const {TwitterApi} = require('twitter-api-v2')
 require('dotenv').config()
+const fs = require('fs')
 //in your .env put BEARER_TOKEN = "your token"
 const appOnlyClient = new TwitterApi(process.env.BEARER_TOKEN)
 
@@ -11,6 +12,7 @@ function randomDate(start, end) {
 
 async function getTweets(max_results){
     if(max_results > 100 || max_results < 10 ) throw new Error("max results can only be between 10-100")
+    if(!process.env.BEARER_TOKEN) return JSON.parse(String(fs.readFileSync('data.json')))
     let jsTweets
     do {
         let oneWeekAgo = new Date()
