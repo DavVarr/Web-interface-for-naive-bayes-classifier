@@ -1,5 +1,4 @@
 const {TwitterApi} = require('twitter-api-v2')
-const fs = require("fs")
 require('dotenv').config()
 //in your .env put BEARER_TOKEN = "your token"
 const appOnlyClient = new TwitterApi(process.env.BEARER_TOKEN)
@@ -18,7 +17,7 @@ async function getTweets(max_results){
         oneWeekAgo.setDate(oneWeekAgo.getDate()-7)
         end_time = randomDate(oneWeekAgo, new Date())
         start_time = randomDate(oneWeekAgo,end_time)   
-        jsTweets = await appOnlyClient.v2.search('from:markets OR from:MarketCurrents -is:retweet -is:reply',
+        jsTweets = await appOnlyClient.v2.search('(from:markets OR from:business) -is:retweet -is:reply',
         {'max_results':max_results,'end_time':end_time.toISOString(),'start_time':start_time.toISOString()})
     } while (jsTweets.tweets.length < max_results); 
     
